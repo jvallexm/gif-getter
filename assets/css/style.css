@@ -1,0 +1,16 @@
+/* @color1: #7F7EFF; */
+/* @color2: #A390E4; */
+/* @color3: #C69DD2; */
+/* @color4: #CC8B8C; */
+/* @color5: #C68866; */
+
+body{
+  background-color: #C69DD2;
+}
+.animal{
+  background-color: #7F7EFF;
+  color: white;
+  margin: 5px;
+  border: 1px solid white;
+  padding: 10px;
+}

@@ -1,11 +1,11 @@
-const buttons = ["kitten","puppy","alpaca","capybara","polar bear","iguana","squirrel","doggo"];
+const topics = ["kitten","puppy","alpaca","capybara","polar bear","iguana","squirrel","doggo"];
 const api_key = "aeIIQVswLPZlsqF60UyxjLiN22lfoJsm";
 
 // Creates buttons elements with text and id equal to the button name
 
 function makeButton(name) {
   
-  return $("<button>").attr("id",name).addClass("btn animal").text(name);
+      return $("<button>").attr("id",name).addClass("btn topic").text(name);
   
 }
 
@@ -13,9 +13,24 @@ function makeButton(name) {
 
 function makeStill(url,ind) {
   
-   return $("<img>").attr("src",url).attr("id",ind).addClass("gif still");
+    return $("<img>").attr("src",url).attr("id",ind).addClass("gif still");
   
 }
+
+// Makes windows for the images
+
+function makeWindow(ind) {
+
+   return $("<div>").attr("id","window-" + ind).addClass("window");
+
+}
+
+const $grid = $("#images").masonry({
+
+    itemSelector: '.window',
+    columnWidth: 3
+
+});
 
 $(document).ready(function(){ 
   
@@ -29,15 +44,17 @@ $(document).ready(function(){
 
       console.log("atempting request for " + query);
       
-      var request = $.get("https://api.giphy.com/v1/gifs/search?q=" + query + "&api_key=" + api_key + "&limit=10")
+      var request = $.get("https://api.giphy.com/v1/gifs/search?q=" + query + "&api_key=" + api_key + "&limit=10");
       
       // Once the request has gotten data, it saves it to the images variable
       // and calls the function to load the images into the "images" div
       
       request.done(function (data){
+
          console.log("request completed");
          images = data.data;
          loadEmUp();
+
       });
       
     }
@@ -51,18 +68,21 @@ $(document).ready(function(){
       $("#images").empty();
           
       for(let i = 0 ; i < images.length ;i++){
-        
-        makeStill(images[i].images.fixed_height_still.url,"image"+i).appendTo("#images");
+          
+        makeWindow(i).appendTo("#images");
+        makeStill(images[i].images.fixed_width_still.url,"image"+i).appendTo("#window-" + i);
+        $("<span>").text("Rating: " + images[i].rating.toUpperCase()).appendTo("#window-" + i);
         
       }   
       
+      $grid.masonry();
     }
   
     // When the page loads, it creates buttons for all of the words in the "buttons" array
   
-    for(let i = 0 ; i < buttons.length ; i++) {
+    for(let i = 0 ; i < topics.length ; i++) {
       
-       makeButton(buttons[i]).appendTo("#buttons");
+       makeButton(topics[i]).appendTo("#buttons");
       
     }
     
@@ -77,7 +97,7 @@ $(document).ready(function(){
     
     // When a button in the buttons div is clicked, it requests gifs for that search term
   
-    $("#buttons").on("click", ".btn", function(){
+    $("#buttons").on("click",".btn",function(){
       
         requestGifs(this.id);
    
@@ -85,7 +105,7 @@ $(document).ready(function(){
     
     // When an image in the images div is clicked, it changes from "still" to "moving" or vice versa
   
-    $("#images").on("click",".gif",function(){
+    $("#images").on("click" , ".gif" , function(){
         
        // The index held by the clicked image in the images array
         
@@ -94,12 +114,15 @@ $(document).ready(function(){
        // If the class of the clicked image contains "still" it changes to "moving"
       
        if(this.className.indexOf("still") !== -1)
-          changeSrc(this.id,images[ind].images.fixed_height.url,"still","moving")
+
+          changeSrc(this.id,images[ind].images.fixed_width.url,"still","moving");
       
-       // Otherwise it goes back from "moving" to "still
+       // Otherwise it goes back from "moving" to "still"
        
        else
-          changeSrc(this.id,images[ind].images.fixed_height_still.url,"moving","still")
+
+          changeSrc(this.id,images[ind].images.fixed_width_still.url,"moving","still");
+        
     });
     
 });

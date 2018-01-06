@@ -7,10 +7,23 @@
 body{
   background-color: #C69DD2;
 }
-.animal{
+.topic{
   background-color: #7F7EFF;
   color: white;
   margin: 5px;
   border: 1px solid white;
   padding: 10px;
+}
+#images{
+	position: fixed;
+}
+.window{
+	padding: 20px;
+	background-color: white;
+	border-radius: 20px;
+	margin: 20px;
+	width: 240px;
+	box-shadow: 2px 2px 2px black;
+	text-align: center;
+	position: relative;
 }

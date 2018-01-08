@@ -9,11 +9,26 @@ function makeButton(name) {
   
 }
 
+// Creates a masonry grid
+function makeGrid(){
+
+      $("#images").masonry({
+        itemSelector: '.window'
+      });
+
+}
+
 // Creates still images based on the source and the index in the array
 
 function makeStill(url,ind) {
   
-    return $("<img>").attr("src",url).attr("id",ind).addClass("gif still");
+    return $("<img>").attr("src",url)
+                     .attr("id",ind)
+                     .addClass("gif still")
+                     .on("load",function(){
+                          console.log("loaded!");
+                          makeGrid();
+                      });
   
 }
 
@@ -24,13 +39,6 @@ function makeWindow(ind) {
    return $("<div>").attr("id","window-" + ind).addClass("window");
 
 }
-
-const $grid = $("#images").masonry({
-
-    itemSelector: '.window',
-    columnWidth: 3
-
-});
 
 $(document).ready(function(){ 
   
@@ -75,7 +83,6 @@ $(document).ready(function(){
         
       }   
       
-      $grid.masonry();
     }
   
     // When the page loads, it creates buttons for all of the words in the "buttons" array
@@ -124,5 +131,5 @@ $(document).ready(function(){
           changeSrc(this.id,images[ind].images.fixed_width_still.url,"moving","still");
         
     });
-    
+  
 });

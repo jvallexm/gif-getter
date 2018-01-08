@@ -12,7 +12,22 @@
 
   <body>
 		
-	<div id="buttons"></div>
+
+  <div class = "row">  
+
+    	<div id="buttons" class="col-md-6"></div>
+      <div class="col-md-6">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Add a Topic!</label>
+            <input type="topic" class="form-control" id="add-topic" placeholder="great gifs!">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      </div>
+
+  </div>
+
   <div id="images" ref="grid"></div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

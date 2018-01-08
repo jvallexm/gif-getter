@@ -10,6 +10,7 @@ function makeButton(name) {
 }
 
 // Creates a masonry grid
+
 function makeGrid(){
 
       $("#images").masonry({
@@ -18,7 +19,8 @@ function makeGrid(){
 
 }
 
-// Creates still images based on the source and the index in the array
+// Creates still images based on the source and the index in the array. Once an image has loaded
+// It modifies the masonry grid to accomidate the image size 
 
 function makeStill(url,ind) {
   
@@ -26,8 +28,9 @@ function makeStill(url,ind) {
                      .attr("id",ind)
                      .addClass("gif still")
                      .on("load",function(){
-                          console.log("loaded!");
+
                           makeGrid();
+
                       });
   
 }
@@ -86,7 +89,7 @@ $(document).ready(function(){
       
     }
   
-    // When the page loads, it creates buttons for all of the words in the "buttons" array
+    // When the page loads, it creates buttons for all of the words in the "topics" array
   
     for(let i = 0 ; i < topics.length ; i++) {
       
@@ -120,13 +123,12 @@ $(document).ready(function(){
        let ind = this.id.split("e")[1];
       
        // If the class of the clicked image contains "still" it changes to "moving"
+       // Otherwise it goes back from "moving" to "still"
       
        if(this.className.indexOf("still") !== -1)
 
           changeSrc(this.id,images[ind].images.fixed_width.url,"still","moving");
-      
-       // Otherwise it goes back from "moving" to "still"
-       
+            
        else
 
           changeSrc(this.id,images[ind].images.fixed_width_still.url,"moving","still");

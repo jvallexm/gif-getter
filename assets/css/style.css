@@ -11,11 +11,16 @@ body{
   background-color: #7F7EFF;
   color: white;
   margin: 5px;
-  border: 1px solid white;
+  border: 2px solid white;
   padding: 10px;
+  box-shadow: 2px 2px 2px black;
+
 }
 #images{
 	position: fixed;
+}
+.row{
+	margin: 10px;
 }
 .window{
 	padding: 20px;
@@ -26,4 +31,17 @@ body{
 	box-shadow: 2px 2px 2px black;
 	text-align: center;
 	position: relative;
+}
+form{
+	padding: 20px;
+	background-color: #A390E4;
+	border: 2px solid white;
+	border-radius: 10px;
+	color: white;
+	box-shadow: 2px 2px 2px black;
+	text-shadow: 2px 2px 2px black;
+
+}
+label{
+	font-size: 125%;
 }

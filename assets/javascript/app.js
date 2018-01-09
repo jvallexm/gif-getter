@@ -135,9 +135,14 @@ $(document).ready(function(){
         
     });
 
-    $("form").submit(function(){
+    // Adds new buttons when the form is submitted if the input is not null
 
-      makeButton($("#add-topic").val()).appendTo("#buttons");
+    $("form").submit(function(event){
+
+      event.preventDefault();
+      let newTopic = $("#add-topic").val();
+      if(newTopic != "")
+        makeButton(newTopic).appendTo("#buttons");
       $("#add-topic").val("");
     
     });

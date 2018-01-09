@@ -5,7 +5,9 @@ const api_key = "aeIIQVswLPZlsqF60UyxjLiN22lfoJsm";
 
 function makeButton(name) {
   
-      return $("<button>").attr("id",name).addClass("btn topic").text(name);
+      return $("<button>").attr("id",name)
+                          .addClass("btn topic")
+                          .text(name);
   
 }
 
@@ -20,18 +22,14 @@ function makeGrid(){
 }
 
 // Creates still images based on the source and the index in the array. Once an image has loaded
-// It modifies the masonry grid to accomidate the image size 
+// It modifies the masonry grid to accomidate the loaded image size 
 
 function makeStill(url,ind) {
   
     return $("<img>").attr("src",url)
                      .attr("id",ind)
                      .addClass("gif still")
-                     .on("load",function(){
-
-                          makeGrid();
-
-                      });
+                     .on("load", makeGrid);
   
 }
 
@@ -83,17 +81,9 @@ $(document).ready(function(){
           
         makeWindow(i).appendTo("#images");
         makeStill(images[i].images.fixed_width_still.url,"image"+i).appendTo("#window-" + i);
-        $("<span>").text("Rating: " + images[i].rating.toUpperCase()).appendTo("#window-" + i);
+        $("<div>").addClass("rating").text("Rating: " + images[i].rating.toUpperCase()).appendTo("#window-" + i);
         
       }   
-      
-    }
-  
-    // When the page loads, it creates buttons for all of the words in the "topics" array
-  
-    for(let i = 0 ; i < topics.length ; i++) {
-      
-       makeButton(topics[i]).appendTo("#buttons");
       
     }
     
@@ -103,6 +93,14 @@ $(document).ready(function(){
     function changeSrc(id,newSrc,remove,add){
       
       $("#" + id).attr("src",newSrc).removeClass(remove).addClass(add);
+      
+    }
+
+     // When the page loads, it creates buttons for all of the words in the "topics" array
+  
+    for(let i = 0 ; i < topics.length ; i++) {
+      
+       makeButton(topics[i]).appendTo("#buttons");
       
     }
     
@@ -146,5 +144,7 @@ $(document).ready(function(){
       $("#add-topic").val("");
     
     });
+
+    makeGrid();
   
 });

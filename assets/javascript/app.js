@@ -134,5 +134,12 @@ $(document).ready(function(){
           changeSrc(this.id,images[ind].images.fixed_width_still.url,"moving","still");
         
     });
+
+    $("form").submit(function(){
+
+      makeButton($("#add-topic").val()).appendTo("#buttons");
+      $("#add-topic").val("");
+    
+    });
   
 });

@@ -75,7 +75,7 @@ $(document).ready(function(){
     function loadEmUp(){
       
       $("#images").empty();
-      
+
       if(images != undefined)
         $("#images").masonry('destroy');
           
@@ -83,7 +83,9 @@ $(document).ready(function(){
           
         makeWindow(i).appendTo("#images");
         makeStill(images[i].images.fixed_width_still.url,"image"+i).appendTo("#window-" + i);
-        $("<div>").addClass("rating").text("Rating: " + images[i].rating.toUpperCase()).appendTo("#window-" + i);
+        $("<div>").addClass("rating")
+                  .text("Rating: " + images[i].rating.toUpperCase())
+                  .appendTo("#window-" + i);
         
       }   
       
@@ -94,7 +96,9 @@ $(document).ready(function(){
     
     function changeSrc(id,newSrc,remove,add){
       
-      $("#" + id).attr("src",newSrc).removeClass(remove).addClass(add);
+      $("#" + id).attr("src",newSrc)
+                 .removeClass(remove)
+                 .addClass(add);
       
     }
 
@@ -141,9 +145,13 @@ $(document).ready(function(){
 
       event.preventDefault();
       let newTopic = $("#add-topic").val();
-      if(newTopic != "")
+
+      if(newTopic != "") {
+
         makeButton(newTopic).appendTo("#buttons");
-      $("#add-topic").val("");
+        $("#add-topic").val("");
+        
+      }
     
     });
 

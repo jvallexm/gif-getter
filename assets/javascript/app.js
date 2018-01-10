@@ -75,7 +75,9 @@ $(document).ready(function(){
     function loadEmUp(){
       
       $("#images").empty();
-      $("#images").masonry('destroy');
+      
+      if(images != undefined)
+        $("#images").masonry('destroy');
           
       for(let i = 0 ; i < images.length ;i++){
           

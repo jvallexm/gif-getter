@@ -18,6 +18,7 @@ body{
 }
 #images{
 	position: fixed;
+	text-align: center;
 }
 .row{
 	margin: 10px;

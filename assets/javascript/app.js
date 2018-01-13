@@ -135,10 +135,8 @@ $(document).ready(function(){
   
     $("#images").on("click" , ".gif" , function(){
         
-       // The index held by the clicked image in the images array and switches the animated state
+       // Switches animated state based on the id of the clicked image
         
-       let ind = $(this).attr("ind");
-
        animateSwitch("#" + this.id); 
         
     });

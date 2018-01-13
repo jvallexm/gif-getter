@@ -24,11 +24,15 @@ function makeGrid(){
 // Creates still images based on the source and the index in the array. Once an image has loaded
 // It modifies the masonry grid to accomidate the loaded image size 
 
-function makeStill(url,ind) {
+function makeStill(still,animated,i) {
   
-    return $("<img>").attr("src",url)
-                     .attr("id",ind)
-                     .addClass("gif still")
+    return $("<img>").attr( "src"      ,  still       )
+                     .attr( "id"       , "image-" + i )
+                     .attr( "ind"      , i            )
+                     .attr( "moving"   , false        )
+                     .attr( "still"    , still        )
+                     .attr( "animated" , animated     )
+                     .addClass("gif")
                      .on("load", makeGrid);
   
 }
@@ -39,6 +43,26 @@ function makeWindow(ind) {
 
    return $("<div>").attr("id","window-" + ind).addClass("window");
 
+}
+
+// Switches images from animated to still and from still to animated using data attributes
+
+function animateSwitch(img){
+
+  let moving = $(img).attr("moving");
+
+  if(moving === "true") {
+
+      $(img).attr("src", $(img).attr("still"))
+            .attr("moving",false);
+
+  }
+  else {
+
+     $(img).attr("src", $(img).attr("animated"))
+           .attr("moving",true);
+
+  }
 }
 
 $(document).ready(function(){ 
@@ -82,7 +106,7 @@ $(document).ready(function(){
       for(let i = 0 ; i < images.length ;i++){
           
         makeWindow(i).appendTo("#images");
-        makeStill(images[i].images.fixed_width_still.url,"image"+i).appendTo("#window-" + i);
+        makeStill(images[i].images.fixed_width_still.url,images[i].images.fixed_width.url,i).appendTo("#window-" + i);
         $("<div>").addClass("rating")
                   .text("Rating: " + images[i].rating.toUpperCase())
                   .appendTo("#window-" + i);
@@ -90,19 +114,8 @@ $(document).ready(function(){
       }   
       
     }
-    
-    // Function that changes moving gifs to static ones and static ones to moving ones
-    // Finds the image by id (index in images array), the new source, the class to remove and the class to add
-    
-    function changeSrc(id,newSrc,remove,add){
-      
-      $("#" + id).attr("src",newSrc)
-                 .removeClass(remove)
-                 .addClass(add);
-      
-    }
 
-     // When the page loads, it creates buttons for all of the words in the "topics" array
+    // When the page loads, it creates buttons for all of the words in the "topics" array
   
     for(let i = 0 ; i < topics.length ; i++) {
       
@@ -122,20 +135,11 @@ $(document).ready(function(){
   
     $("#images").on("click" , ".gif" , function(){
         
-       // The index held by the clicked image in the images array
+       // The index held by the clicked image in the images array and switches the animated state
         
-       let ind = this.id.split("e")[1];
-      
-       // If the class of the clicked image contains "still" it changes to "moving"
-       // Otherwise it goes back from "moving" to "still"
-      
-       if(this.className.indexOf("still") !== -1)
+       let ind = $(this).attr("ind");
 
-          changeSrc(this.id,images[ind].images.fixed_width.url,"still","moving");
-            
-       else
-
-          changeSrc(this.id,images[ind].images.fixed_width_still.url,"moving","still");
+       animateSwitch("#" + this.id); 
         
     });
 
